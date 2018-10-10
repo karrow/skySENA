@@ -1,12 +1,12 @@
 
 
- # ifndef OpenTB6612FNG_h
- # define OpenTB6612FNG_h
+ # ifndef OpenMD17a_h
+ # define OpenMD17a_h
  # include "Arduino.h"
 
-class OpenTB6612FNG{
+class OpenMD17a{
 	public:
-	OpenTB6612FNG(int TP);
+	OpenMD17a(int TP);
 
 	void MotorIz(int value);
 	void MotorDe(int value);

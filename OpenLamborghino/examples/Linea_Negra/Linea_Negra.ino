@@ -1,20 +1,20 @@
-#include <OpenTB6612FNG.h>
+#include <OpenMD17a.h>
 #include <OpenLamborghino.h>
 
 #define BOTON  12
 #define BUZZER  10
 
 int setpoint = 0;
-int gyroSpeed = 80;
-int base = 40;
+int gyroSpeed = 40;
+int base = 20;
 
 
 float Kprop = 1.1;
 float Kderiv = 0.9;
 float Kinte = 0.1;
 
-OpenLamborghino OpenLamborghino(BOTON, BUZZER);
-OpenTB6612FNG OpenTB6612FNG(0);
+OpenLamborghino OpenLamborghino(BOTON);
+OpenMD17a OpenMD17a(0);
 
 void setup() {
   Serial.begin(9600);
@@ -25,11 +25,11 @@ void setup() {
 }
 void loop() {
 
-  Serialin();
+  //Serialin();
   int pos =  OpenLamborghino.LineaNegra();
   OpenLamborghino.PIDLambo(Kprop, Kderiv, Kinte);
   int Power = OpenLamborghino.PID(pos, setpoint, gyroSpeed);
-  OpenTB6612FNG.Motores(base - Power, base + Power );
+  OpenMD17a.Motores(base - Power, base + Power );
 
 }
 
@@ -38,7 +38,7 @@ void Serialin() {
 
   if (Serial.available() > 0) {
 
-    tone(BUZZER, 1300, 100);
+    //tone(BUZZER, 1300, 100);
     base = Serial.parseInt();
     Kprop = Serial.parseInt() / 10.0;
     Kderiv = Serial.parseInt() / 10.0;

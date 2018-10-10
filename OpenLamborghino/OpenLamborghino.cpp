@@ -1,12 +1,12 @@
  # include "Arduino.h"
  # include "OpenLamborghino.h"
- # include "OpenTB6612FNG.h"
+ # include "OpenMD17a.h"
  # include "QTRSensors.h"
 
- # define NUM_SENSORS 6 // number of sensors used
+ # define NUM_SENSORS 8 // number of sensors used
  # define NUM_SAMPLES_PER_SENSOR 4 // average 4 analog samples per sensor reading
- # define EMITTER_PIN 11 // emitter is controlled by digital
-
+ # define EMITTER_PIN 14 // emitter is controlled by digital
+ # define TIMEOUT       2500 
 
  # define Drueda 25
  # define HIZ A7 // pin Hito Izquierda
@@ -106,30 +106,35 @@ int mapcontador = 0;
 int vrecta = 1000;
 int vcurva = 500;
 
+
+
+QTRSensorsRC qtrrc((unsigned char[]) {18, 19, 15, 16, 9, 8, 7, 4},
+  NUM_SENSORS, TIMEOUT, EMITTER_PIN); 
+
 QTRSensorsAnalog qtra((unsigned char[]) {
-	0,
-	1,
-	2,
-	3,
-	4,
-	5
+	19,
+	15,
+	16,
+	9,
+	8,
+	7
 },
 	NUM_SENSORS, NUM_SAMPLES_PER_SENSOR, EMITTER_PIN);
 unsigned int sensorValues[NUM_SENSORS];
 
-OpenLamborghino::OpenLamborghino(int PINBOTON, int PINBUZZER) {
-	BUZZER = PINBUZZER;
+OpenLamborghino::OpenLamborghino(int PINBOTON) {
+	//BUZZER = PINBUZZER;
 	BOTON = PINBOTON;
 	pinMode(PINBOTON, INPUT);
 	pinMode(HIZ, INPUT);
 	pinMode(HDE, INPUT);
-	pinMode(PINBUZZER, OUTPUT);
+	//pinMode(PINBUZZER, OUTPUT);
 
 }
 
 void OpenLamborghino::WaitBoton() {   // Entra en un bucle infinito de espera.
 	while (!digitalRead(BOTON));  // Se sale del bucle cuando se aprieta el botón
-	tone(BUZZER, 2000, 100);      // Cuando sale del bucle, suena el buzzer
+	//tone(BUZZER, 2000, 100);      // Cuando sale del bucle, suena el buzzer
 }
 
 void OpenLamborghino::beep() {
@@ -138,7 +143,7 @@ void OpenLamborghino::beep() {
 
 void OpenLamborghino::IfBoton() {
 	if (digitalRead(BOTON) == HIGH) 	{
-		tone(BUZZER, 1000, 50);
+		//tone(BUZZER, 1000, 50);
 		delay(200);
 		WaitBoton();
 		delay(200);
@@ -149,39 +154,39 @@ void OpenLamborghino::IfBoton() {
 
 void OpenLamborghino::calibracion() {
 
-	tone(BUZZER, 1000, 100);
-	for (int i = 0; i < 100; i++) // make the calibration take about 10 seconds
+	//tone(BUZZER, 1000, 100);
+	for (int i = 0; i < 400; i++) // make the calibration take about 10 seconds
 	{
-		qtra.calibrate(); // reads all sensors 10 times at 2.5 ms per six sensors (i.e. ~25 ms per call)
+		qtrrc.calibrate(); // reads all sensors 10 times at 2.5 ms per six sensors (i.e. ~25 ms per call)
 	}
-
 	Serial.begin(9600);
 	for (int i = 0; i < NUM_SENSORS; i++) {
-		Serial.print(qtra.calibratedMinimumOn[i]);
+		Serial.print(qtrrc.calibratedMinimumOn[i]);
 		Serial.print(' ');
 	}
 	Serial.println();
 
 	for (int i = 0; i < NUM_SENSORS; i++) {
-		Serial.print(qtra.calibratedMaximumOn[i]);
+		Serial.print(qtrrc.calibratedMaximumOn[i]);
 		Serial.print(' ');
 	}
 	Serial.println();
 	Serial.println();
-	tone(BUZZER, 1500, 50);
+	//tone(BUZZER, 1500, 50);
 	delay(70);
-	tone(BUZZER, 1500, 50);
+	//tone(BUZZER, 1500, 50);
 }
 
 long OpenLamborghino::LineaNegra() {
-	int posicion = qtra.readLine(sensorValues, true, false);
-	posicion = map(posicion, 0, 5000, -255, 255);
+	int posicion = qtrrc.readLine(sensorValues, true, false);
+	//Serial.println(posicion);
+	posicion = map(posicion, 0, 7000, -255, 255);
 	return posicion;
 }
 
 long OpenLamborghino::LineaBlanca() {
-	int posicion = qtra.readLine(sensorValues, true, true);
-	posicion = map(posicion, 0, 5000, -255, 255);
+	int posicion = qtrrc.readLine(sensorValues, true, true);
+	posicion = map(posicion, 0, 7000, -255, 255);
 	return posicion;
 }
 
@@ -340,7 +345,7 @@ void OpenLamborghino::funcionCruce() {
 
 
 void OpenLamborghino::funcionHitoIz() {
-tone(BUZZER, 1500, 50);
+//tone(BUZZER, 1500, 50);
 
 			mapaiz[mapcontador] = int(0.335 * (piz));
 			mapade[mapcontador] = int(0.335 * (pde));
@@ -365,7 +370,7 @@ tone(BUZZER, 1500, 50);
 
 void OpenLamborghino::funcionHitoDe() {
 
-			tone(BUZZER, 2000, 50);
+			//tone(BUZZER, 2000, 50);
 
 			mapaiz[mapcontador] = int(0.335 * (piz));
 			mapade[mapcontador] = int(0.335 * (pde));

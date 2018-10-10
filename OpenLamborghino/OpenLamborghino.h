@@ -4,11 +4,11 @@
  # define OpenLamborghino_h
  # include "Arduino.h"
  # include "QTRSensors.h"
- # include "OpenTB6612FNG.h"
+ # include "OpenMD17a.h"
 
 class OpenLamborghino {
 	public:
-	OpenLamborghino(int PINBOTON, int PINBUZZER);
+	OpenLamborghino(int PINBOTON);
 	void WaitBoton();
 	void beep();
 	void IfBoton();
