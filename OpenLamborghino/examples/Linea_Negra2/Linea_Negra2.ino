@@ -27,7 +27,7 @@ void setup() {
    TIMSK1 = 0;      //des habilita cualquier interrupcion que 
 
   
-  OpenLamborghino.WaitBoton();
+  //OpenLamborghino.WaitBoton();
   OpenLamborghino.calibracion();
   OpenLamborghino.WaitBoton();
   delay(1000);
