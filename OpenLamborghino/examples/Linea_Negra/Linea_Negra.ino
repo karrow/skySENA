@@ -39,7 +39,7 @@ void loop() {
   int pos =  OpenLamborghino.LineaNegra();
   int Power = OpenLamborghino.PID(pos, setpoint, gyroSpeed);
   OpenMD17a.Motores(base - Power, base + Power );
-
+  
   finish = micros() - start;
   while(Ts>finish)
   {
