@@ -5,15 +5,15 @@
 
 
 int setpoint = 0;
-int gyroSpeed = 230;
-int base = 60;
+int gyroSpeed = 240;//Freno pronunciada
+int base = 60; //Velocidad
 
 //para el conteo del tiempo de muestreo.
 float start,finish;
 float Ts = 5000.0;
 
-float Kprop = 1.2;
-float Kderiv = 3.0;
+float Kprop = 1.5;
+float Kderiv = 2.5;
 float Kinte = 0.0;
 
 OpenLamborghino OpenLamborghino(BOTON);

@@ -128,6 +128,7 @@ OpenLamborghino::OpenLamborghino(int PINBOTON) {
 	pinMode(PINBOTON, INPUT);
 	pinMode(HIZ, INPUT);
 	pinMode(HDE, INPUT);
+	pinMode(LED_BUILTIN,OUTPUT);
 	//pinMode(PINBUZZER, OUTPUT);
 
 }
@@ -153,7 +154,7 @@ void OpenLamborghino::IfBoton() {
 
 
 void OpenLamborghino::calibracion() {
-
+	digitalWrite(LED_BUILTIN,1);
 	//tone(BUZZER, 1000, 100);
 	for (int i = 0; i < 400; i++) // make the calibration take about 10 seconds
 	{
@@ -174,6 +175,7 @@ void OpenLamborghino::calibracion() {
 	Serial.println();
 	//tone(BUZZER, 1500, 50);
 	delay(70);
+	digitalWrite(LED_BUILTIN,0);
 	//tone(BUZZER, 1500, 50);
 }
 
