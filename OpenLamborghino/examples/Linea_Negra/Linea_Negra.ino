@@ -26,9 +26,10 @@ void setup() {
    OCR1A = 255;   // tope de la señal o maximo pwm 
    TIMSK1 = 0;      //des habilita cualquier interrupcion que 
 
-  
+  //Presiona el button
   OpenLamborghino.WaitBoton();
   OpenLamborghino.calibracion();
+  //Presiona el button para Arancar
   OpenLamborghino.WaitBoton();
   delay(1000);
   OpenLamborghino.PIDLambo(Kprop, Kderiv, Kinte);

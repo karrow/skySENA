@@ -155,7 +155,7 @@ void OpenLamborghino::IfBoton() {
 
 void OpenLamborghino::calibracion() {
 	digitalWrite(LED_BUILTIN,1);
-	//tone(BUZZER, 1000, 100);
+
 	for (int i = 0; i < 400; i++) // make the calibration take about 10 seconds
 	{
 		qtrrc.calibrate(); // reads all sensors 10 times at 2.5 ms per six sensors (i.e. ~25 ms per call)
@@ -173,10 +173,10 @@ void OpenLamborghino::calibracion() {
 	}
 	Serial.println();
 	Serial.println();
-	//tone(BUZZER, 1500, 50);
+	
 	delay(70);
 	digitalWrite(LED_BUILTIN,0);
-	//tone(BUZZER, 1500, 50);
+	
 }
 
 long OpenLamborghino::LineaNegra() {
@@ -372,7 +372,6 @@ void OpenLamborghino::funcionHitoIz() {
 
 void OpenLamborghino::funcionHitoDe() {
 
-			//tone(BUZZER, 2000, 50);
 
 			mapaiz[mapcontador] = int(0.335 * (piz));
 			mapade[mapcontador] = int(0.335 * (pde));
