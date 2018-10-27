@@ -1,11 +1,11 @@
  # include "Arduino.h"
  # include "OpenLamborghino.h"
- # include "OpenMD17a.h"
+ # include "OpenL293D.h"
  # include "QTRSensors.h"
 
- # define NUM_SENSORS 8 // number of sensors used
+ # define NUM_SENSORS 4 // number of sensors used
  # define NUM_SAMPLES_PER_SENSOR 4 // average 4 analog samples per sensor reading
- # define EMITTER_PIN 14 // emitter is controlled by digital
+ # define EMITTER_PIN QTR_NO_EMITTER_PIN // emitter is controlled by digital
  # define TIMEOUT       2500 
 
  # define Drueda 25
@@ -108,16 +108,14 @@ int vcurva = 500;
 
 
 
-QTRSensorsRC qtrrc((unsigned char[]) {18, 19, 15, 16, 9, 8, 7, 4},
+QTRSensorsRC qtrrc((unsigned char[]) {7,8,9,10},
   NUM_SENSORS, TIMEOUT, EMITTER_PIN); 
 
 QTRSensorsAnalog qtra((unsigned char[]) {
-	19,
-	15,
-	16,
-	9,
+	7,
 	8,
-	7
+	9,
+	10
 },
 	NUM_SENSORS, NUM_SAMPLES_PER_SENSOR, EMITTER_PIN);
 unsigned int sensorValues[NUM_SENSORS];
@@ -182,13 +180,13 @@ void OpenLamborghino::calibracion() {
 long OpenLamborghino::LineaNegra() {
 	int posicion = qtrrc.readLine(sensorValues, true, false);
 	//Serial.println(posicion);
-	posicion = map(posicion, 0, 7000, -255, 255);
+	posicion = map(posicion, 0, 3000, -255, 255);
 	return posicion;
 }
 
 long OpenLamborghino::LineaBlanca() {
 	int posicion = qtrrc.readLine(sensorValues, true, true);
-	posicion = map(posicion, 0, 7000, -255, 255);
+	posicion = map(posicion, 0, 3000, -255, 255);
 	return posicion;
 }
 

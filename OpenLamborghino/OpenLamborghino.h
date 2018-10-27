@@ -4,7 +4,7 @@
  # define OpenLamborghino_h
  # include "Arduino.h"
  # include "QTRSensors.h"
- # include "OpenMD17a.h"
+ # include "OpenL293D.h"
 
 class OpenLamborghino {
 	public:

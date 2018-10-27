@@ -1,4 +1,4 @@
-#include <OpenMD17a.h>
+#include <OpenL293D.h>
 #include <OpenLamborghino.h>
 
 #define BOTON  12
@@ -17,7 +17,7 @@ float Kderiv = 2.5;
 float Kinte = 0.0;
 
 OpenLamborghino OpenLamborghino(BOTON);
-OpenMD17a OpenMD17a(0);
+OpenL293D OpenL293D(0);
 
 void setup() {
   Serial.begin(9600);
@@ -39,7 +39,7 @@ void loop() {
   start = micros();
   int pos =  OpenLamborghino.LineaNegra();
   int Power = OpenLamborghino.PID(pos, setpoint, gyroSpeed);
-  OpenMD17a.Motores(base - Power, base + Power );
+  OpenL293D.Motores(base - Power, base + Power );
   
   finish = micros() - start;
   while(Ts>finish)
